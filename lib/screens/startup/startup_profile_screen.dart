@@ -7,7 +7,8 @@ class StartupProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.watch<AuthCubit>().state.name ?? 'Startup';
+    final auth = context.watch<AuthCubit>().state;
+    final name = auth.name ?? 'Startup';
 
     return Scaffold(
       appBar: AppBar(title: const Text('Startup Profile')),
@@ -18,14 +19,27 @@ class StartupProfileScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Text(name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 6),
-          // TODO: pull real verification status from Firestore
-          const Chip(
-            label: Text('Pending Verification', style: TextStyle(fontSize: 12)),
-            backgroundColor: Colors.orangeAccent,
+          Chip(
+            label: Text(
+              auth.verified ? 'Verified' : 'Pending Verification',
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+            ),
+            backgroundColor: auth.verified ? Colors.green : Colors.orangeAccent,
           ),
+          if (!auth.verified) ...[
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: () {
+                context.read<AuthCubit>().requestVerification();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Verification requested. An admin will review your account.')),
+                );
+              },
+              child: const Text('Request Verification'),
+            ),
+          ],
           const SizedBox(height: 24),
           const ListTile(leading: Icon(Icons.business_outlined), title: Text('Startup Details')),
-          const ListTile(leading: Icon(Icons.verified_outlined), title: Text('Verification Status')),
           const ListTile(leading: Icon(Icons.help_outline), title: Text('Help & Support')),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),

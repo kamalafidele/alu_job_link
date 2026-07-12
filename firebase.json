@@ -1,0 +1,36 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "alu-joblink",
+          "appId": "1:112516071577:android:af50d3a4e28d8719fc3808",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "alu-joblink",
+          "appId": "1:112516071577:ios:7a671f320f7b11dbfc3808",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "alu-joblink",
+          "configurations": {
+            "android": "1:112516071577:android:af50d3a4e28d8719fc3808",
+            "ios": "1:112516071577:ios:7a671f320f7b11dbfc3808"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "nam5",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

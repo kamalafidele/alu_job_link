@@ -1,11 +1,13 @@
-// An internship/opportunity posted by a startup.
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Represents an internship/opportunity posted by a startup.
 class OpportunityModel {
   final String id;
   final String title;
   final String startupId;
   final String startupName;
   final String description;
-  final String category; //Design, Engineering, or Marketing
+  final String category; // Design, Engineering, Marketing
   final String commitment;
   final List<String> skills;
   final DateTime postedAt;
@@ -32,7 +34,8 @@ class OpportunityModel {
       category: map['category'] ?? 'Other',
       commitment: map['commitment'] ?? '',
       skills: List<String>.from(map['skills'] ?? []),
-      postedAt: (map['postedAt'] as DateTime?) ?? DateTime.now(),
+      // Firestore stores dates as Timestamp, not DateTime - convert on read.
+      postedAt: (map['postedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 

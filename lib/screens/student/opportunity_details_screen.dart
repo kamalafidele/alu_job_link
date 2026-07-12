@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubit/auth_cubit.dart';
+import '../../cubit/application_cubit.dart';
 import '../../models/opportunity_model.dart';
+import '../../models/application_model.dart';
 
 class OpportunityDetailsScreen extends StatelessWidget {
   final OpportunityModel opportunity;
@@ -42,11 +46,28 @@ class OpportunityDetailsScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: FilledButton(
-                onPressed: () {
-                  // TODO: create an ApplicationModel document in Firestore.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Application submitted!')),
+                onPressed: () async {
+                  final auth = context.read<AuthCubit>().state;
+                  final application = ApplicationModel(
+                    id: '', // Firestore assigns this when we .add() it
+                    opportunityId: opportunity.id,
+                    opportunityTitle: opportunity.title,
+                    startupId: opportunity.startupId,
+                    startupName: opportunity.startupName,
+                    studentId: auth.uid!,
+                    studentName: auth.name ?? 'Student',
+                    status: 'applied',
+                    appliedAt: DateTime.now(),
                   );
+
+                  await context.read<ApplicationCubit>().apply(application);
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Application submitted!')),
+                    );
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text('Apply Now'),
               ),

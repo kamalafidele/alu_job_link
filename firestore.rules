@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each user (student or startup) can read any profile (needed to show
+    // startup names on opportunity cards), but can only create/edit their own.
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Anyone logged in can browse opportunities. Only the startup that owns
+    // a posting (startupId == their uid) can create, edit, or delete it.
+    match /opportunities/{oppId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.startupId == request.auth.uid;
+      allow update, delete: if request.auth != null
+                    && resource.data.startupId == request.auth.uid;
+    }
+
+    // A student can read/create their own applications. A startup can read
+    // and update (change status of) applications addressed to them.
+    match /applications/{appId} {
+      allow read: if request.auth != null &&
+        (resource.data.studentId == request.auth.uid ||
+         resource.data.startupId == request.auth.uid);
+      allow create: if request.auth != null
+                    && request.resource.data.studentId == request.auth.uid;
+      allow update: if request.auth != null
+                    && resource.data.startupId == request.auth.uid;
+    }
+  }
+}

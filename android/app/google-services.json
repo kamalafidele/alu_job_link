@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "112516071577",
+    "project_id": "alu-joblink",
+    "storage_bucket": "alu-joblink.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112516071577:android:af50d3a4e28d8719fc3808",
+        "android_client_info": {
+          "package_name": "com.example.alu_job_link"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy3O1Ithe9B-E2HJ9UawUkxnS-KlBG5KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
