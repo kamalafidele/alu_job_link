@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Welcome back',
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
-              const Text('Log in to ALU Job Link',
+              const Text('Log in to ALU JobLink',
                   style: TextStyle(fontSize: 15, color: Colors.grey)),
               const SizedBox(height: 32),
               TextField(
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           : () {
                         context.read<AuthCubit>().login(
                           email: _emailController.text.isEmpty
-                              ? 'user@alu.edu'
+                              ? 'user@alu.com'
                               : _emailController.text,
                           role: _role,
                         );
