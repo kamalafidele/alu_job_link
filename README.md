@@ -1,4 +1,4 @@
-# Campus Bridge
+# ALU JobLink
 
 A Flutter mobile app connecting ALU students seeking internship experience with student-led startups and early-stage ventures in the ALU ecosystem. Startups post opportunities; students discover, filter, and apply for them; both sides track progress in real time.
 
